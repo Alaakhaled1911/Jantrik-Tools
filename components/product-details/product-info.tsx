@@ -83,7 +83,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={handleAddToCart}
-            className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 rounded  w-full md:max-w-[200px]"
+            className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3  w-full md:max-w-[200px]"
           >
             Add to Cart
           </motion.button>

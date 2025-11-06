@@ -98,7 +98,7 @@ export function ProductCarousel() {
 
                   {/* Discount Badge */}
                   {product.discount && (
-                    <div className="absolute top-3 right-3 bg-yellow-400 text-black font-bold px-2 py-1 rounded text-xs">
+                    <div className="absolute top-3 right-3 bg-yellow-400 text-black  px-2 py-1 rounded text-xs">
                       -{product.discount}%
                     </div>
                   )}
@@ -142,7 +142,7 @@ export function ProductCarousel() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={handleAddToCart}
-                    className="bg-gray-300  py-2 px-5 text-xs tracking-widest hover:bg-yellow-400 hover:text-white transition-colors rounded-md"
+                    className="bg-gray-300  py-2 px-5 text-xs tracking-widest hover:bg-yellow-400 hover:text-white transition-colors"
                   >
                     ADD TO CART
                   </motion.button>

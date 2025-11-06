@@ -72,7 +72,7 @@ export function ProductCardItem({ product, index }: ProductCardProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: index * 0.1 + 0.1 }}
-          className="absolute top-4 right-4 bg-yellow-400 text-black px-2.5 py-1 rounded text-sm font-bold"
+          className="absolute top-4 right-4 bg-yellow-400 text-black px-2.5 py-1 rounded text-sm "
         >
           -{product.discount}%
         </motion.div>

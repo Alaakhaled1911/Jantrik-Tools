@@ -98,7 +98,7 @@ export default function WishlistPage() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => handleAddToCart(product)}
-                    className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 rounded text-sm transition flex items-center justify-center gap-2"
+                    className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 text-sm transition flex items-center justify-center gap-2"
                   >
                     <ShoppingCart size={16} />
                     Add to Cart
