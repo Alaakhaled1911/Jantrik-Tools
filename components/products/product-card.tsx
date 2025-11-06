@@ -65,8 +65,11 @@ export function ProductCardItem({ product, index }: ProductCardProps) {
       onClick={handleProductClick}
     >
       {/* Image Container */}
-      <div className=" h-64 overflow-hidden flex items-center justify-center">
-        <Image src={product.image || "/placeholder.svg"} alt={product.name} fill className="object-contain p-8" />
+      <div className=" h-64  bg-transparent overflow-hidden flex items-center justify-center">
+        <Image src={product.image || "/placeholder.svg"} alt={product.name}              width={200}
+                   height={200}
+                    className="object-contain bg-cover bg-center group-hover:scale-105 transition-transform duration-300 flex items-center justify-center"
+                  />
 
         <motion.div
           initial={{ opacity: 0 }}
@@ -81,8 +84,10 @@ export function ProductCardItem({ product, index }: ProductCardProps) {
           initial={{ opacity: 0 }}
           whileHover={{ opacity: 1 }}
           transition={{ duration: 0.2 }}
-          className="absolute inset-0  hover:bg-black/4 transition-colors flex items-end justify-between px-4 pb-4"
-        >
+           className="absolute inset-0 hover:bg-black/4 transition-colors flex items-end justify-between px-4 pb-4
+              opacity-100 sm:opacity-0 sm:hover:opacity-100"
+>
+        
           {/* Heart Icon */}
           <motion.button
             whileHover={{ scale: 1.15 }}
@@ -113,7 +118,7 @@ export function ProductCardItem({ product, index }: ProductCardProps) {
       </div>
 
       {/* Product Info */}
-      <div className="p-4">
+      <div className="p-4 mt-12">
         
         {/* Rating */}
         <div className="flex justify-center gap-0.5 mb-2">{renderStars(product.rating)}</div>

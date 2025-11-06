@@ -18,7 +18,7 @@ export function ImageGallery({ mainImage, thumbnails }: ImageGalleryProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
-        className="bg-white rounded-lg overflow-hidden aspect-square"
+        className="bg-white rounded-lg overflow-hidden "
       >
         <Image
           src={selectedImage || "/placeholder.svg"}

@@ -28,7 +28,7 @@ export function ServiceInfoSection() {
   ]
 
   return (
-    <section className="bg-white py-16">
+    <section className="bg-gray-50 py-16">
       <div className="container max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {services.map((service, index) => (

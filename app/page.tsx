@@ -16,8 +16,8 @@ export default function Home() {
       <ProductCarousel />
       <PromotionalBanners />
       <ProductShowcase />
-      <ServiceInfoSection />
       <BestSellersSection />
+          <ServiceInfoSection />
     </main>
   )
 }

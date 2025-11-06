@@ -56,7 +56,7 @@ export function ProductCarousel() {
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {carouselProducts.map((product) => {
             const isFavorited = favoriteItems.includes(product.id)
 
@@ -86,11 +86,10 @@ export function ProductCarousel() {
                 className="cursor-pointer relative group rounded-lg  "
               >
                 {/* Product Image */}
-                <div className="relative w-full  ">
+                <div className=" w-full  ">
                   <Image
                     src={product.image || "/placeholder.svg"}
                     alt={product.name}
-
                    width={200}
                    height={200}
                     className="object-contain bg-cover bg-center group-hover:scale-105 transition-transform duration-300 flex items-center justify-center"
@@ -98,7 +97,7 @@ export function ProductCarousel() {
 
                   {/* Discount Badge */}
                   {product.discount && (
-                    <div className="absolute top-3 right-3 bg-yellow-400 text-black  px-2 py-1 rounded text-xs">
+                    <div className="absolute top-3 right-2 w-fit  bg-yellow-400 text-black  px-2 py-1 rounded text-xs">
                       -{product.discount}%
                     </div>
                   )}
@@ -122,7 +121,7 @@ export function ProductCarousel() {
                   initial={{ opacity: 0 }}
                   whileHover={{ opacity: 1 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute inset-0 -mb-8 hover:border-2 hover:p-5 transition-colors flex items-end justify-between px-4 pb-4"
+                  className="absolute inset-0 -mb-12 md:-mb-8 hover:border-2 hover:p-5 transition-colors flex items-end gap-2 justify-between px-4 pb-4"
                 >
                   {/* Heart Icon */}
                   <motion.button
@@ -142,7 +141,7 @@ export function ProductCarousel() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={handleAddToCart}
-                    className="bg-gray-300  py-2 px-5 text-xs tracking-widest hover:bg-yellow-400 hover:text-white transition-colors"
+                    className="bg-gray-300  md:py-2 p-1 md:px-5 text-xs hover:bg-yellow-400 hover:text-white transition-colors"
                   >
                     ADD TO CART
                   </motion.button>

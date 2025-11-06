@@ -60,18 +60,23 @@ export function HeroSlider() {
   }
 
   return (
-    <div className="relative w-full h-full min-h-[500px] rounded-lg overflow-hidden cursor-pointer group">
+    <div className="relative w-full min-h-[400px] sm:min-h-[500px] lg:min-h-[600px] rounded-lg overflow-hidden cursor-pointer group">
       <AnimatePresence mode="wait">
-      
         <motion.div
           key={`bg-${current}`}
           initial={{ opacity: 0 }}
-          animate={{ opacity: 3 }}
-          exit={{ opacity: .4 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0.4 }}
           transition={{ duration: 0.8 }}
           className="absolute inset-0"
         >
-          <Image src={slides[current].bgImage} alt="Background" fill className="object-contain" priority />
+          <Image
+            src={slides[current].bgImage}
+            alt="Background"
+            fill
+            className="object-cover sm:object-contain"
+            priority
+          />
         </motion.div>
 
         <motion.div
@@ -80,20 +85,19 @@ export function HeroSlider() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6 }}
-          className="absolute inset-0 flex items-center justify-between px-8"
+          className="absolute inset-0 flex flex-col justify-center px-6 sm:px-10 md:px-16 lg:px-24"
         >
-          
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="z-10 text-white flex flex-col gap-2 max-w-md"
+            className="z-10 text-white flex flex-col gap-2 max-w-[90%] sm:max-w-md"
           >
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 0.9, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="text-sm font-semibold"
+              className="text-xs sm:text-sm md:text-base font-semibold"
             >
               {slides[current].category}
             </motion.p>
@@ -102,7 +106,7 @@ export function HeroSlider() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="text-2xl font-bold"
+              className="text-xl sm:text-2xl md:text-3xl font-bold leading-tight"
             >
               {slides[current].title}
             </motion.h3>
@@ -111,7 +115,7 @@ export function HeroSlider() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className="text-4xl font-bold"
+              className="text-2xl sm:text-4xl md:text-5xl font-bold leading-tight"
             >
               {slides[current].subtitle}
             </motion.h2>
@@ -125,7 +129,7 @@ export function HeroSlider() {
                 <motion.button
                   whileHover={{ scale: 1.05, backgroundColor: "#ffb300" }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-[#ffc107] text-black px-6 py-2 rounded-md font-semibold transition-colors mt-4"
+                  className="bg-[#ffc107] text-black px-4 sm:px-6 py-2 sm:py-3 rounded-md font-semibold transition-colors mt-4 text-sm sm:text-base"
                 >
                   {slides[current].buttonText}
                 </motion.button>
@@ -135,7 +139,7 @@ export function HeroSlider() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.7 }}
-                className="text-lg font-semibold mt-2"
+                className="text-base sm:text-lg font-semibold mt-2"
               >
                 {slides[current].price}
               </motion.p>
@@ -144,21 +148,22 @@ export function HeroSlider() {
         </motion.div>
       </AnimatePresence>
 
-
+      {/* Navigation Arrows */}
       <button
         onClick={handlePrev}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/30 hover:bg-white/50 text-white p-2 rounded-full transition-all opacity-0 group-hover:opacity-100"
+        className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/30 hover:bg-white/50 text-white p-1 sm:p-2 rounded-full transition-all opacity-0 group-hover:opacity-100"
       >
         ←
       </button>
       <button
         onClick={handleNext}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/30 hover:bg-white/50 text-white p-2 rounded-full transition-all opacity-0 group-hover:opacity-100"
+        className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/30 hover:bg-white/50 text-white p-1 sm:p-2 rounded-full transition-all opacity-0 group-hover:opacity-100"
       >
         →
       </button>
 
-      <div className="absolute bottom-6 left-8 z-20 flex gap-2">
+      {/* Dots */}
+      <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
         {slides.map((_, idx) => (
           <motion.button
             key={idx}
@@ -166,7 +171,9 @@ export function HeroSlider() {
               setCurrent(idx)
               setAutoPlay(false)
             }}
-            className={`w-2 h-2 rounded-full transition-all ${idx === current ? "bg-white w-6" : "bg-white/50"}`}
+            className={`w-2 h-2 rounded-full transition-all ${
+              idx === current ? "bg-white w-6" : "bg-white/50"
+            }`}
             whileHover={{ scale: 1.2 }}
           />
         ))}

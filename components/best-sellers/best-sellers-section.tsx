@@ -39,7 +39,7 @@ export function BestSellersSection() {
   const visibleProducts = products.slice(currentIndex, currentIndex + itemsPerPage)
 
   return (
-    <section className="bg-gray-50 py-16">
+    <section className="bg-white py-16">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header with navigation arrows */}
         <div className="flex items-center justify-between mb-8">
