@@ -1,51 +1,26 @@
 "use client"
 
+import type React from "react"
+
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { products } from "@/lib/data/products"
-import { Star, Heart } from "lucide-react"
+import { Heart } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "@/lib/store"
 import { addToCart } from "@/lib/slices/cartSlice"
 import { toggleFavorite } from "@/lib/slices/favoritesSlice"
+import { useState } from "react"
+import { containerVariants, itemVariants } from "@/lib/animations" // Added imports for containerVariants and itemVariants
+import { renderStars } from "@/lib/utils" 
 
 export function ProductCarousel() {
   const carouselProducts = products.slice(8, 13)
   const router = useRouter()
   const dispatch = useDispatch<AppDispatch>()
   const favoriteItems = useSelector((state: RootState) => state.favorites.items)
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
-  }
-
-  const renderStars = (rating: number) => (
-    <div className="flex gap-1">
-      {[1, 2, 3, 4, 5].map((star) => (
-        <Star
-          key={star}
-          size={16}
-          className={`${
-            star <= Math.floor(rating)
-              ? "fill-yellow-400 text-yellow-400"
-              : star - rating < 1
-                ? "fill-yellow-400 text-yellow-400 opacity-50"
-                : "text-gray-300"
-          }`}
-        />
-      ))}
-    </div>
-  )
+  const [hoveredProduct, setHoveredProduct] = useState<string | null>(null)
 
   return (
     <section className="py-12 px-4 bg-white">
@@ -59,6 +34,7 @@ export function ProductCarousel() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {carouselProducts.map((product) => {
             const isFavorited = favoriteItems.includes(product.id)
+            const isHovered = hoveredProduct === product.id
 
             const handleAddToCart = (e: React.MouseEvent) => {
               e.stopPropagation()
@@ -69,7 +45,7 @@ export function ProductCarousel() {
                   price: product.price,
                   image: product.image,
                   originalPrice: product.originalPrice,
-                })
+                }),
               )
             }
 
@@ -83,21 +59,24 @@ export function ProductCarousel() {
                 key={product.id}
                 variants={itemVariants}
                 onClick={() => router.push(`/product/${product.id}`)}
-                className="cursor-pointer relative group rounded-lg  "
+                className="cursor-pointer relative group rounded-lg mb-7"
+                onMouseEnter={() => setHoveredProduct(product.id)}
+                onMouseLeave={() => setHoveredProduct(null)}
+                onTouchStart={() => setHoveredProduct(product.id)}
               >
                 {/* Product Image */}
-                <div className=" w-full  ">
+                <div className="w-full">
                   <Image
                     src={product.image || "/placeholder.svg"}
                     alt={product.name}
-                   width={200}
-                   height={200}
+                    width={200}
+                    height={200}
                     className="object-contain bg-cover bg-center group-hover:scale-105 transition-transform duration-300 flex items-center justify-center"
                   />
 
                   {/* Discount Badge */}
                   {product.discount && (
-                    <div className="absolute top-3 right-2 w-fit  bg-yellow-400 text-black  px-2 py-1 rounded text-xs">
+                    <div className="absolute top-3 right-2 w-fit bg-yellow-400 text-black px-2 py-1 rounded text-xs">
                       -{product.discount}%
                     </div>
                   )}
@@ -106,34 +85,27 @@ export function ProductCarousel() {
                 {/* Product Info */}
                 <div className="p-4 flex flex-col gap-3 bg-white">
                   {renderStars(product.rating)}
-                  <h3 className="text-gray-700 font-medium text-sm line-clamp-2 ">
-                    {product.name}
-                  </h3>
+                  <h3 className="text-gray-700 font-medium text-sm line-clamp-2">{product.name}</h3>
                   <div className="flex gap-2 items-center">
                     <span className="font-bold text-gray-900 text-sm">${product.price.toFixed(2)}</span>
-                    <span className="text-gray-400 line-through text-xs">
-                      ${product.originalPrice.toFixed(2)}
-                    </span>
+                    <span className="text-gray-400 line-through text-xs">${product.originalPrice.toFixed(2)}</span>
                   </div>
                 </div>
 
                 <motion.div
                   initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
+                  animate={{ opacity: isHovered ? 1 : 0 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute inset-0 -mb-12 md:-mb-8 hover:border-2 hover:p-5 transition-colors flex items-end gap-2 justify-between px-4 pb-4"
+                  className="absolute inset-0  md:inset-auto md:bottom-0 md:left-0 md:right-0 bg-white/30 md:bg-transparent flex items-center md:items-end gap-2 justify-between px-4 py-4 md:pb-4 md:-mb-12 -mb-8 pointer-events-none md:pointer-events-auto"
                 >
                   {/* Heart Icon */}
                   <motion.button
                     whileHover={{ scale: 1.15 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={handleFavoriteClick}
-                    className="transition-opacity"
+                    className="transition-opacity pointer-events-auto"
                   >
-                    <Heart
-                      size={20}
-                      className={`${isFavorited ? "fill-red-500 text-red-500" : "text-gray-600"}`}
-                    />
+                    <Heart size={20} className={`${isFavorited ? "fill-red-500 text-red-500" : "text-gray-600"}`} />
                   </motion.button>
 
                   {/* Add to Cart Button */}
@@ -141,11 +113,10 @@ export function ProductCarousel() {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={handleAddToCart}
-                    className="bg-gray-300  md:py-2 p-1 md:px-5 text-xs hover:bg-yellow-400 hover:text-white transition-colors"
+                    className="bg-gray-300 md:py-2 p-1 md:px-5 text-xs hover:bg-yellow-400 hover:text-white transition-colors pointer-events-auto"
                   >
                     ADD TO CART
                   </motion.button>
-              
                 </motion.div>
               </motion.div>
             )

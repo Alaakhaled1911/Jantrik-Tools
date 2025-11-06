@@ -1,9 +1,9 @@
 "use client"
 
 import type React from "react"
-
+import { useState } from "react"
 import { motion } from "framer-motion"
-import { Heart, TrendingUp } from "lucide-react"
+import { Heart } from "lucide-react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useDispatch, useSelector } from "react-redux"
@@ -22,6 +22,8 @@ export function ProductCardItem({ product, index }: ProductCardProps) {
   const dispatch = useDispatch<AppDispatch>()
   const favoriteItems = useSelector((state: RootState) => state.favorites.items)
   const isFavorited = favoriteItems.includes(product.id)
+
+  const [isTouched, setIsTouched] = useState(false)
 
   const handleAddToCart = () => {
     dispatch(
@@ -44,6 +46,14 @@ export function ProductCardItem({ product, index }: ProductCardProps) {
     dispatch(toggleFavorite(product.id))
   }
 
+  const handleTouchStart = () => {
+    setIsTouched(true)
+  }
+
+  const handleTouchEnd = () => {
+    setIsTouched(false)
+  }
+
   const renderStars = (rating: number) => {
     const stars = []
     for (let i = 0; i < 5; i++) {
@@ -63,13 +73,18 @@ export function ProductCardItem({ product, index }: ProductCardProps) {
       transition={{ duration: 0.5, delay: index * 0.1 }}
       className="overflow-hidden group cursor-pointer relative"
       onClick={handleProductClick}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       {/* Image Container */}
       <div className=" h-64  bg-transparent overflow-hidden flex items-center justify-center">
-        <Image src={product.image || "/placeholder.svg"} alt={product.name}              width={200}
-                   height={200}
-                    className="object-contain bg-cover bg-center group-hover:scale-105 transition-transform duration-300 flex items-center justify-center"
-                  />
+        <Image
+          src={product.image || "/placeholder.svg"}
+          alt={product.name}
+          width={200}
+          height={200}
+          className="object-contain bg-cover bg-center group-hover:scale-105 transition-transform duration-300 flex items-center justify-center"
+        />
 
         <motion.div
           initial={{ opacity: 0 }}
@@ -84,10 +99,12 @@ export function ProductCardItem({ product, index }: ProductCardProps) {
           initial={{ opacity: 0 }}
           whileHover={{ opacity: 1 }}
           transition={{ duration: 0.2 }}
-           className="absolute inset-0 hover:bg-black/4 transition-colors flex items-end justify-between px-4 pb-4
-              opacity-100 sm:opacity-0 sm:hover:opacity-100"
->
-        
+          className={`absolute inset-0 transition-colors flex items-end justify-between px-4 pb-4 ${
+            isTouched
+              ? "opacity-100 bg-black/4"
+              : "opacity-100 sm:opacity-0 group-hover:opacity-100 group-hover:bg-black/4"
+          }`}
+        >
           {/* Heart Icon */}
           <motion.button
             whileHover={{ scale: 1.15 }}
@@ -110,16 +127,12 @@ export function ProductCardItem({ product, index }: ProductCardProps) {
           >
             ADD TO CART
           </motion.button>
-<div>
-
-</div>
-
+          <div></div>
         </motion.div>
       </div>
 
       {/* Product Info */}
       <div className="p-4 mt-12">
-        
         {/* Rating */}
         <div className="flex justify-center gap-0.5 mb-2">{renderStars(product.rating)}</div>
 
@@ -132,7 +145,6 @@ export function ProductCardItem({ product, index }: ProductCardProps) {
           <span className="text-gray-400 line-through text-xs">${product.originalPrice.toFixed(2)}</span>
         </div>
       </div>
-      
     </motion.div>
   )
 }
