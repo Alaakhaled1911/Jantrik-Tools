@@ -95,7 +95,7 @@ export function ProductCardItem({ product, index }: ProductCardProps) {
           animate={{ opacity: showActions ? 1 : 0 }}
           whileHover={{ opacity: 1 }}
           transition={{ duration: 0.2 }}
-          className="absolute inset-0 bg-black/10 flex items-end justify-between px-4 pb-4
+          className="absolute inset-0  bg-white/30 md:bg-transparent flex items-end justify-between px-4 pb-4
             opacity-100 sm:opacity-0 sm:hover:opacity-100"
         >
           {/* Heart Icon */}
