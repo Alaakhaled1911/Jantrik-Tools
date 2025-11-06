@@ -15,7 +15,7 @@ export function TopBar() {
         {/* Left: Phone */}
         <div className="flex items-center gap-2 text-sm text-gray-700">
           <PhoneIcon size={18} />
-          <span>Call Us : +11 222 3333</span>
+          <span className="text-sm">Call Us : +11 222 3333</span>
         </div>
 
 
