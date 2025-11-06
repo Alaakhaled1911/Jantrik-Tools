@@ -8,7 +8,7 @@ const geist = Geist({ subsets: ["latin"] })
 
 export const metadata = {
   title: "Jantrik", 
-  description: "Mellentesque faucibus dapibus dapibus. Morbi aliquam aliquet neque. Donec placerat dapibus sollicitudin. Morbi arcu nisi, mattis ullamcorper in, dapibus ac nunc. Cras bibendum mauris et sapien nibh feugiat. scelerisque accumsan nibh gravida. Quisque aliquet justo elementum lectus ultrices bibendum.",
+  description: "Jantrik Tools offers a wide range of high-quality mechanical and power tools — from saws, drills, and wrenches to construction and repair equipment. Built for durability and performance, our tools help professionals and DIY users get the job done efficiently..",
   generator: "Alaa haled",
   icons: {
     icon: "/logo2.png",        
