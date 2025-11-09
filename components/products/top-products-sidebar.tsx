@@ -5,12 +5,14 @@ import { ChevronUp, ChevronDown } from "lucide-react"
 import Image from "next/image"
 import { useState } from "react"
 import type { Product } from "@/lib/types/product"
+import { useRouter } from "next/navigation"
 
 interface TopProductsSidebarProps {
   products: Product[]
 }
 
 export function TopProductsSidebar({ products }: TopProductsSidebarProps) {
+  const router = useRouter()
   const [scrollIndex, setScrollIndex] = useState(0)
   const itemsPerView = 5
   const maxScroll = Math.max(0, products.length - itemsPerView)
@@ -69,6 +71,7 @@ export function TopProductsSidebar({ products }: TopProductsSidebarProps) {
         {visibleProducts.map((product, index) => (
           <motion.div
             key={product.id}
+               onClick={() => router.push(`/product/${product.id}`)}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}

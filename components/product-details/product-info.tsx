@@ -20,7 +20,16 @@ export function ProductInfo({ product }: ProductInfoProps) {
   const isFavorite = favorites.includes(product.id)
 
   const handleAddToCart = () => {
-    dispatch(addToCart({ id: product.id, name: product.name }))
+    dispatch(
+      addToCart({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        originalPrice: product.originalPrice,
+        quantity: quantity,
+      }),
+    )
   }
 
   const handleToggleFavorite = () => {

@@ -28,35 +28,38 @@ const cartSlice = createSlice({
     },
     addToCart: (
       state,
-      action: PayloadAction<{ id: string; name: string; price: number; image: string; originalPrice: number }>,
+      action: PayloadAction<{ id: string; name: string; price: number; image: string; originalPrice: number; quantity?: number }>,
     ) => {
+      const quantityToAdd = action.payload.quantity || 1
       const existingItem = state.cartItems.find((item) => item.id === action.payload.id)
       if (existingItem) {
-        existingItem.quantity += 1
+        existingItem.quantity += quantityToAdd
+        // Don't increment counter if item already exists - just update quantity
       } else {
         state.cartItems.push({
           id: action.payload.id,
           name: action.payload.name,
-          quantity: 1,
+          quantity: quantityToAdd,
           price: action.payload.price,
           image: action.payload.image,
           originalPrice: action.payload.originalPrice,
         })
+        // Counter represents unique products, so increment by 1 regardless of quantity
+        state.items += 1
       }
-      state.items += 1
     },
     removeFromCart: (state, action: PayloadAction<string>) => {
       const item = state.cartItems.find((item) => item.id === action.payload)
       if (item) {
-        state.items -= item.quantity
+        // Counter represents unique products, so decrement by 1 regardless of quantity
+        state.items -= 1
         state.cartItems = state.cartItems.filter((item) => item.id !== action.payload)
       }
     },
     updateQuantity: (state, action: PayloadAction<{ id: string; quantity: number }>) => {
       const item = state.cartItems.find((item) => item.id === action.payload.id)
       if (item) {
-        const difference = action.payload.quantity - item.quantity
-        state.items += difference
+        // Counter represents unique products, so updating quantity doesn't change the counter
         item.quantity = action.payload.quantity
       }
     },
