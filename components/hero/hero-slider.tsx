@@ -60,7 +60,7 @@ export function HeroSlider() {
   }
 
   return (
-    <div className="relative w-full min-h-[400px] sm:min-h-[500px] lg:min-h-[600px] rounded-lg overflow-hidden cursor-pointer group">
+    <div className="relative w-full min-h-[300px] sm:min-h-[400px] lg:min-h-[500px] rounded-lg overflow-hidden cursor-pointer group">
       <AnimatePresence mode="wait">
         <motion.div
           key={`bg-${current}`}
@@ -70,13 +70,16 @@ export function HeroSlider() {
           transition={{ duration: 0.8 }}
           className="absolute inset-0"
         >
+          {/* Background Image */}
           <Image
             src={slides[current].bgImage}
             alt="Background"
             fill
-            className="object-cover sm:object-contain"
+            className="object-unset"
             priority
           />
+          
+        
         </motion.div>
 
         <motion.div
@@ -85,19 +88,20 @@ export function HeroSlider() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6 }}
-          className="absolute inset-0 flex flex-col justify-center px-6 sm:px-10 md:px-16 lg:px-24"
+          className="absolute inset-0 flex flex-col justify-center px-8 sm:px-12 md:px-16 lg:px-20 z-20"
         >
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="z-10 text-white flex flex-col gap-2 max-w-[90%] sm:max-w-md"
+            className="text-white flex flex-col gap-3 sm:gap-4 max-w-[90%] sm:max-w-lg"
           >
             <motion.p
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 0.9, y: 0 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="text-xs sm:text-sm md:text-base font-semibold"
+              className="text-2xl sm:text-3xl md:text-4xl font-cursive italic font-bold text-white"
+              style={{ fontFamily: 'cursive' }}
             >
               {slides[current].category}
             </motion.p>
@@ -106,7 +110,7 @@ export function HeroSlider() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.5 }}
-              className="text-xl sm:text-2xl md:text-3xl font-bold leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white"
             >
               {slides[current].title}
             </motion.h3>
@@ -115,7 +119,7 @@ export function HeroSlider() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className="text-2xl sm:text-4xl md:text-5xl font-bold leading-tight"
+              className="text-xl  md:text-4xl   leading-tight text-white"
             >
               {slides[current].subtitle}
             </motion.h2>
@@ -125,11 +129,12 @@ export function HeroSlider() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.7 }}
+                className="mt-6 sm:mt-8"
               >
                 <motion.button
                   whileHover={{ scale: 1.05, backgroundColor: "#ffb300" }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-[#ffc107] text-black px-4 sm:px-6 py-2 sm:py-3 rounded-md font-semibold transition-colors mt-4 text-sm sm:text-base"
+                  className="hidden md:block bg-[#ffc107]  text-black px-8 sm:px-10 py-3 sm:py-4 rounded-lg shadow-lg transition-all"
                 >
                   {slides[current].buttonText}
                 </motion.button>
@@ -139,7 +144,7 @@ export function HeroSlider() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.7 }}
-                className="text-base sm:text-lg font-semibold mt-2"
+                className="text-lg md:text-2xl  mt-4"
               >
                 {slides[current].price}
               </motion.p>
